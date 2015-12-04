@@ -1,0 +1,169 @@
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/favicon.ico" />
+    <title>BuzzCloud &#9679; little cloud of buzzy words :)</title>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css'>
+    <style>
+        body { background-color: #FFF; color: #666; text-align: center; font-family: sans-serif; padding-top: 0}
+        a:link, a:visited, a:active {color: #E0E0E0; text-decoration: none; border: none;}
+        a:hover {color: #909090; text-decoration: none; border: none;}
+        div.titlediv {
+            position: relative;
+            top: 15vw;
+            margin: auto;
+            line-height: 1.5em;
+            background-color: #FFF;
+        }
+        h1 { font-size: 12vw; color: Black; font-family: "Aldrich";}
+        #dot { color: Red; font-size: 10.0vw; font-family: "Chivo";}
+
+        div.atdiv {
+            position: absolute;
+            top: 18vw;
+            left: 48%;
+            margin-top: 4vw;
+            background-color: #FFF;
+            font-size: 4vw;
+            color: #E0E0E0;
+            line-height: 1vw;
+            font-family: "Aldrich";
+            font-weight: 900;
+            text-align: center;
+        }
+        #at {
+            position: absolute;
+            animation: spinX 8s linear 3s 1 alternate;
+            -webkit-animation: spinX 8s linear 3s 1 alternate;
+        }
+        @keyframes spinX {
+            0%   {transform: rotateX(0deg); transform-origin: 0% 50% 0;}
+            100% {transform: rotateX(360deg); transform-origin: 0% 50% 0;}
+        }
+        @-webkit-keyframes spinX {
+            0%   {-webkit-transform: rotateX(0deg); -webkit-transform-origin: 0% 50% 0;}
+            100% {-webkit-transform: rotateX(360deg); -webkit-transform-origin: 0% 50% 0;}
+        }
+        @-webkit-keyframes spinY {
+            0%   {-webkit-transform: rotateY(0deg); -webkit-transform-origin: 0% 0% 5;}
+            100% {-webkit-transform: rotateY(360deg); -webkit-transform-origin: 0% 0% 5;}
+        }
+
+        #cloud { padding: 0; line-height: 3em; text-align: center; margin-top: -2vw;}
+        #cloud li { display: inline; font-family: "Droid Sans";}
+        #cloud span#tag1 { font-size: 1.1em; font-weight: 300;}
+        #cloud span#tag2 { font-size: 1.2em; font-weight: 300;}
+        #cloud span#tag3 { font-size: 1.4em; font-weight: 300;}
+        #cloud span#tag4 { font-size: 1.5em; font-weight: 400;}
+        #cloud span#tag5 { font-size: 1.8em; font-weight: 500;}
+        #cloud span#tag6 { font-size: 1.9em; font-weight: 600;}
+        #cloud span#tag7 { font-size: 2.1em; font-weight: 700;}
+        #cloud span#tag8 { font-size: 2.3em; font-weight: 800;}
+        #cloud span#tag9 { font-size: 2.5em; font-weight: 900;}
+        #cloud span#tag10 { font-size: 3.1em; font-weight: 900;}
+
+        .shift { position: relative; font-size: 100%; top: -.4vw;}
+        .up .shift { position: relative; top: -1.2vw;}
+        .up2 .shift { position: relative; top: -.9vw;}
+        .down { position: relative; top: .8vw; font-size: 100%;}
+        .down2 { position: relative; top: 1.2vw; font-size: 100%;}
+
+        @media all and (max-width: 799px) {
+            div.atdiv { font-size: 8vw; line-height: 8vw; top: 20vw; left: 47%;}
+        }
+        @media all and (max-width: 599px) {
+            div.atdiv {font-size: 12vw; line-height: 12vw; top: 20vw; left: 46%;}
+        }
+    </style>
+    <script type="text/javascript">
+
+        function fadeOut(element, i) {
+            var op = 1;
+            var timer = setInterval(function () {if (op <= 0.1) {
+                clearInterval(timer);
+                op = 0;
+            }
+                element.style.opacity = op;
+                element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+                op -= op * 0.1;
+            }, i);
+        }
+
+        function fadeInOut(element, i, p) {
+            var op = 0.01;
+            var timer = setInterval(function () {
+                if (op >= 1) {
+                    clearInterval(timer);
+                    op = 0.99;
+                    if (p == 0) {fadeOut(element, i + 5);}
+                }
+                element.style.opacity = op;
+                element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+                op = op + (op * 0.1);
+            }, i);
+        }
+
+        function tagShow(element, fade, p, delay) {
+            setTimeout(function(){fadeInOut(element, fade, p);}, delay);
+        }
+
+        function show() {
+            first = document.getElementById("first");
+            second = document.getElementById("more");
+            dot = document.getElementById("dot");
+            domain = document.getElementById("buzz");
+            at = document.getElementById("at");
+            cloud = document.getElementById("cloud");
+            cloud.style.marginTop = "-12vw";
+
+            var maxTags = 10;
+            var tag = new Array();
+            var id = "";
+            for (var i = 1; i <= maxTags; i++) {
+                id = "tag" + i;
+                tag[i] = document.getElementById(id);
+            }
+
+            var spans = document.getElementsByTagName("span");
+            for (var i = 0, max = spans.length; i < max; i++) {
+                spans[i].style.opacity = 0;
+            }
+
+            var  fade = [ 0, 50, 50, 60, 70, 50, 60, 50, 70, 50, 70];
+            var delay = [ 0, 1, 40, 530, 1110, 325, 950, 480, 120, 885, 660]
+            for (var i = 1; i <= maxTags; i++) {
+                tagShow(tag[i], fade[i], 0, delay[i]);
+            }
+
+            setTimeout(function(){fadeInOut(first, 80, 1);}, 5100);
+            setTimeout(function(){fadeInOut(second, 80, 1);}, 5100);
+            setTimeout(function(){fadeInOut(dot, 80, 1);}, 5500);
+            setTimeout(function(){fadeInOut(domain, 80, 1);}, 5100);
+
+            setTimeout(function(){fadeInOut(at, 40, 1);}, 6500);
+        }
+    </script>
+</head>
+<body>
+<div class="titlediv">
+    <h1><span id="first"></span><span id="more">More</span><span id="dot">.</span><span id="buzz">buzz</span></h1>
+    <ul id="cloud">
+        <li><span id="tag8" class="down">SuperBuzz</span><span id="tag1" class="up2"> TurboBuzz</span></li>
+        <li><span id="tag9" class="up">MegaBuzz</span><span id="tag6" class="down2"> ExtraBuzz</span></li>
+        <li><span id="tag7" class="up">HiperBuzz</span><span id="tag3" class="down"> PureBuzz</span></li>
+        <li><span id="tag2" class="down2">UnicornBuzz</span><span id="tag5" class="up shift"> OnlyBuzz</span></li>
+        <li><span id="tag4" class="down">DotBuzz</span><span id="tag10" class=""> UberBuzz</span></li>
+    </ul>
+    <div class="atdiv">
+        <span id="at"><a href="" target="_top">@</a></span>
+    </div>
+</div>
+<script type="text/javascript">
+    show();
+</script>
+</body>
+</html>
